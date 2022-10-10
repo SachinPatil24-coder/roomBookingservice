@@ -25,7 +25,6 @@ public class Room implements Serializable{
 	private Timestamp updatedDate;
 	private Boolean status;
 
-	
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "room_Typeid")

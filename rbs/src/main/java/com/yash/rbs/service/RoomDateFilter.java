@@ -28,27 +28,27 @@ public class RoomDateFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		
-		RoomAvaiable lastrow= roomAvaiableRepo.findTopByOrderByIdDesc();
-		System.out.println("ssssssssssss"+lastrow.getAvaiableDate());
-		String str_date=lastrow.getAvaiableDate().toString();
-		String[] array = str_date.split("\\ ");
-		LocalDate now= LocalDate.now();
-		LocalDate target=now.plusDays(10);
-		LocalDate start = LocalDate.parse(array[0]);
-		
-		System.out.println(start);
-		while(!start.isEqual(target))
-		{
-			start = start.plusDays(1);
-			System.out.println(start);
-			RoomAvaiable roomAvaiable=new RoomAvaiable();
-			Date avdate = java.sql.Date.valueOf(start);
-			roomAvaiable.setAvaiableDate(avdate);
-			roomAvaiable.setCount(100);
-			roomAvaiableRepo.save(roomAvaiable);
-		}
-		
+//		
+//		RoomAvaiable lastrow= roomAvaiableRepo.findTopByOrderByIdDesc();
+//		System.out.println("ssssssssssss"+lastrow.getAvaiableDate());
+//		String str_date=lastrow.getAvaiableDate().toString();
+//		String[] array = str_date.split("\\ ");
+//		LocalDate now= LocalDate.now();
+//		LocalDate target=now.plusDays(10);
+//		LocalDate start = LocalDate.parse(array[0]);
+//		
+//		System.out.println(start);
+//		while(!start.isEqual(target))
+//		{
+//			start = start.plusDays(1);
+//			System.out.println(start);
+//			RoomAvaiable roomAvaiable=new RoomAvaiable();
+//			Date avdate = java.sql.Date.valueOf(start);
+//			roomAvaiable.setAvaiableDate(avdate);
+//			roomAvaiable.setCount(100);
+//			roomAvaiableRepo.save(roomAvaiable);
+//		}
+//		
 		chain.doFilter(request, response);
 		
 	}

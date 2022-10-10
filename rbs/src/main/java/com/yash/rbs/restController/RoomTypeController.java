@@ -1,5 +1,7 @@
 package com.yash.rbs.restController;
 
+import java.util.List;
+
 import com.yash.rbs.model.Room;
 import com.yash.rbs.model.RoomType;
 import com.yash.rbs.service.RoomTypeService;
@@ -7,6 +9,7 @@ import com.yash.rbs.service.RoomTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +33,23 @@ public class RoomTypeController {
 		return response;
 		
 	}
+	@GetMapping("/allRoomType")
+	public ResponseEntity<List<RoomType>> allRoom() {
+		List<RoomType> room = roomTypeService.findAllRoomType();
+		ResponseEntity<List<RoomType>> response;
+		if (room != null) {
+			response = new ResponseEntity<List<RoomType>>(HttpStatus.CREATED);
+
+		} else {
+			response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return response;
+	}
+
+	
+	
+	
+	
 
 }
 

@@ -1,5 +1,8 @@
 package com.yash.rbs.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.yash.rbs.model.User;
 import com.yash.rbs.repository.UserRepo;
 
@@ -13,10 +16,20 @@ public class UserService {
 	UserRepo userRepo;
 	
 	
-	public User bookRoom(User user) {
-		return userRepo.save(user);
+	public List<User> findAllUser(){
+		return userRepo.findAll();
+	}
+	public Optional<User> userById(Integer id){
+		return userRepo.findById(id);	
 	}
 	
+	public User saveUser(User user) {
+		User user1=null;
+		if(user!=null) {
+			user1=userRepo.save(user);
+		}
+		return user1;
 	
-	
+	}
 }
+

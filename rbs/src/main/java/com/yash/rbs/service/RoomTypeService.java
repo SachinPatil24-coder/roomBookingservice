@@ -1,6 +1,7 @@
 package com.yash.rbs.service;
 
-import com.yash.rbs.model.Room;
+import java.util.List;
+
 import com.yash.rbs.model.RoomType;
 import com.yash.rbs.repository.RoomTypeRepo;
 
@@ -17,6 +18,13 @@ public class RoomTypeService {
 		return roomTypeRepo.save(roomType);
 	}
 	
+	public List<RoomType> findAllRoomType() {
+		return roomTypeRepo.findAll();
+	}
 
+	public RoomType findRoomType(Integer id) {
+		return roomTypeRepo.findByRoomTypeid(id);
+	}
+	
 }
 
