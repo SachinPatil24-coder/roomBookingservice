@@ -14,22 +14,30 @@ public class UserService {
 
 	@Autowired
 	UserRepo userRepo;
-	
-	
-	public List<User> findAllUser(){
+
+	public List<User> findAllUser() {
 		return userRepo.findAll();
 	}
-	public Optional<User> userById(Integer id){
-		return userRepo.findById(id);	
+
+	public Optional<User> userById(Integer id) {
+		return userRepo.findById(id);
 	}
-	
+
 	public User saveUser(User user) {
-		User user1=null;
-		if(user!=null) {
-			user1=userRepo.save(user);
+		User user1 = null;
+		if (user != null) {
+			user1 = userRepo.save(user);
 		}
 		return user1;
-	
-	}
-}
 
+	}
+
+	public User getLogindetail(String user) {
+		String user1 = null;
+		if (user != null) {
+			user1 = userRepo.findByEmailId(user);
+		}
+		return userRepo.save(user1);
+	}
+
+}

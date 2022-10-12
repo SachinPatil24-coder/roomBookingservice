@@ -18,6 +18,7 @@ import javax.persistence.Table;
 @Table(name="reserved")
 public class Resvered {
 	
+
 	@Id @GeneratedValue
 	private Integer id;
 	@Column(name="bookDate")
@@ -68,7 +69,6 @@ public class Resvered {
 	public void setBookDate(Timestamp bookDate) {
 		this.bookDate = bookDate;
 	}
-	 
 	 
 	
 	

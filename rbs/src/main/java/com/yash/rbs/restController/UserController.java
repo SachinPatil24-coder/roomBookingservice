@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.yash.rbs.model.AES;
 import com.yash.rbs.model.User;
+import com.yash.rbs.request.LogInRequest;
 import com.yash.rbs.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,36 +20,55 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-//@RequestMapping("/sachin")
+//@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	AES securityUtil;
-	
+
+	@PostMapping("/login")
+	public User loginUser(@RequestBody LogInRequest logInRequest) {
+		String response = null;
+		User userInfo = userService.getLogindetail(logInRequest.getEmailId());
+		if (userInfo != null) {
+			if (userInfo.getPassaword().equals(logInRequest.getPassaword())) {
+				response = "Login is succesfull";
+			} else {
+			}
+			response = "Password does not match";
+		} else {
+			response = "email does not match";
+		}
+		return userInfo;
+	}
+
 	@PostMapping("/booking")
-	public ResponseEntity<User> bookRoom(@RequestBody User user){
-		//System.out.println(user.getPassaword());
-		//System.out.println(securityUtil.encrypt(user.getPassaword()));
-	user.setPassaword(securityUtil.encrypt(user.getPassaword()));
-	User user1=userService.saveUser(user);
-	ResponseEntity<User> response;
-	if(user1!=null) {
-		response=new ResponseEntity<>(HttpStatus.CREATED);
-	}else {
-		response= new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	public ResponseEntity<User> bookRoom(@RequestBody User user) {
+		// System.out.println(user.getPassaword());
+		// System.out.println(securityUtil.encrypt(user.getPassaword()));
+		user.setPassaword(securityUtil.encrypt(user.getPassaword()));
+//	user.setPassaword(securityUtil.decrypt(user.getPassaword()));	
+		User user1 = userService.saveUser(user);
+		ResponseEntity<User> response;
+		if (user1 != null) {
+			response = new ResponseEntity<>(HttpStatus.CREATED);
+		} else {
+			response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return response;
 	}
-	return  response;
-	}
-	
+
 	@GetMapping("/allUser")
 	public ResponseEntity<List<User>> allRoom() {
 		List<User> user = userService.findAllUser();
+
 		ResponseEntity<List<User>> response;
 		if (user != null) {
-			response = new ResponseEntity<List<User>>(user,HttpStatus.CREATED);
+
+			response = new ResponseEntity<List<User>>(user, HttpStatus.CREATED);
 
 		} else {
 			response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -65,23 +85,5 @@ public class UserController {
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

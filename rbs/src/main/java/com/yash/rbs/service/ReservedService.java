@@ -1,8 +1,6 @@
 package com.yash.rbs.service;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,8 +10,11 @@ import java.util.List;
 import com.yash.rbs.model.BookedDetails;
 import com.yash.rbs.model.Resvered;
 import com.yash.rbs.model.RoomAvaiable;
+import com.yash.rbs.model.RoomType;
 import com.yash.rbs.repository.ReservedRepo;
 import com.yash.rbs.repository.RoomAvaiableRepo;
+import com.yash.rbs.repository.RoomRepo;
+import com.yash.rbs.repository.RoomTypeRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReservedService {
 
+
 	@Autowired
 	RoomAvaiableRepo roomAvaiablerepo;
 	@Autowired
 	ReservedRepo reservedRepo;
+	
+	@Autowired
+	RoomRepo roomRepo;
+	
+	@Autowired
+	RoomTypeRepo roomTypeRepo;
 
 	public void bookedRoom(BookedDetails bookDetails) {
 		// TODO Auto-generated method stub
@@ -53,6 +61,8 @@ public class ReservedService {
 				Integer updatedCount = 0;
 				if (roomAvaiable.getCount() > 0) {
 					updatedCount = roomAvaiable.getCount() - 1;
+					allowcateRoom(bookDetails);
+					
 				}
 				roomAvaiable.setCount(updatedCount);
 				roomAvaiablerepo.save(roomAvaiable);
@@ -69,4 +79,20 @@ public class ReservedService {
 
 	}
 
+	private void allowcateRoom(BookedDetails bookDetails) {
+		// TODO Auto-generated method stub
+		
+		RoomType rooType=roomTypeRepo.findByRoomTypeid(bookDetails.getTypeId());
+		//List<Room> room=roomRepo.findByRoomid(bookDetails.getTypeId(), true);
+		/*
+		 * Room room=roomRepo.findByRoomType(rooType); if(room!=null) {
+		 * room.setStatus(false); roomRepo.save(room); } else { throw new
+		 * NullPointerException(); }
+		 */
+		
+		/*Room room=roomRepo.findFirstByOrderByRoom_TypeidAsc(bookDetails.getTypeId());
+		System.out.println("RRRRRRRRRrr   :::: "+room.getRoomNumber());
+		System.out.println("KKKKKKKKKKKKKK ::"+room.getRoomId());*/
+		
+	}
 }

@@ -21,7 +21,6 @@ public class RoomType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer roomTypeid;	
-	
 	private Integer maxCapaity;
 	private Double price;
 	private String roomTypes;
